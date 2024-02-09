@@ -5,6 +5,6 @@ from goods.views import ListCategoryAPIView, ProductListAPIView, ProductDetailAP
 
 urlpatterns = [
     path('categories/', ListCategoryAPIView.as_view(), name='categories-list'),
-    path('products/', ProductListAPIView.as_view(), name='products-list'),
+    path('products/<int:category_id>/', ProductListAPIView.as_view(), name='products-list'),
     path('products/<int:id>/', ProductDetailAPIView.as_view(), name='product'),
 ]
