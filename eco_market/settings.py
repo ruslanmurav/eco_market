@@ -79,6 +79,7 @@ WSGI_APPLICATION = 'eco_market.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': config('DATABASE_GOODS_MYSQL_ENGINE'),
@@ -87,7 +88,7 @@ DATABASES = {
         'PASSWORD': config('DATABASE_GOODS_MYSQL_PASSWORD'),
         'HOST': config('DATABASE_GOODS_MYSQL_HOST'),
         'PORT': config('DATABASE_GOODS_MYSQL_PORT'),
-    }
+    },
 }
 
 
