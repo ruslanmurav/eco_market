@@ -4,10 +4,26 @@ from goods.serializers import FullProductSerializer
 from orders.models import Order, OrderProduct
 
 
+class OrderProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderProduct
+        fields = ['product_id', 'quantity']
+        extra_kwargs = {'product': {'write_only': True}}
+
+
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['id', 'phone_number', 'address', 'landmark', 'comment', 'products']
+
+    def create(self, validated_data):
+        products_data = validated_data.pop('products')
+        order = Order.objects.create(**validated_data)
+        for product_data in products_data:
+            product = product_data.pop('product')
+            quantity = product_data.pop('quantity')
+            OrderProduct.objects.create(order=order, product=product, quantity=quantity)
+        return order
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -28,3 +44,6 @@ class OrderShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'created_at', 'total_cost']
+
+
+
